@@ -322,7 +322,92 @@ fn if_let_statement(a: bool) {
 fn ownership_error() {
     let name1 = String::from("joseph");
     let name2 = name1; // ownership moved, uncomment next line to show error
-   // println!("{}", name1)
+                       // println!("{}", name1)
     println!("{}", name2);
 }
 
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn traits_n_types() {
+    //traits kind of have a public methods feel to them
+    // create a trait
+    trait CheckIfNegativeOrPositive {
+        fn is_negative(self) -> bool;
+        fn is_positive(self) -> bool;
+    }
+
+    //◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+    //◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+    //we can use traits on a type we made like a struct "our trait on our type"
+
+    // create our struct
+    struct Num {
+        value: i32,
+    }
+
+    // now we can connect our trait with our struct
+    impl CheckIfNegativeOrPositive for Num {
+        // include the trait function to use
+        fn is_negative(self) -> bool {
+            // we want to check if negative
+            self.value < 0
+        }
+        fn is_positive(self) -> bool {
+            // we can also check if positive
+            self.value > 0
+        }
+    }
+
+    // instantiate our struct
+    let my_num = Num { value: -42 };
+    let my_num_2 = Num { value: -42 };
+    // my_num implements our trait
+    println!("{}", my_num.is_negative()); // true
+    println!("{}", my_num_2.is_positive()); // false
+
+    //◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+    //◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+    //we can use traits on primatives, "Our trait on a foreign types"
+
+    // since its not our type we dont have to make the type we just connect them
+    impl CheckIfNegativeOrPositive for i32 {
+        fn is_negative(self) -> bool {
+            // we want to check if negative
+            self < 0
+        }
+        fn is_positive(self) -> bool {
+            // we can also check if positive
+            self > 0
+        }
+    }
+
+    println!("{}", 42.is_positive()); // true
+
+    //◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+    //◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+    // we can also use a trait someone else made "foreign trait on our type"
+    impl std::ops::Neg for Num {
+        type Output = Num;
+
+        fn neg(self) -> Num {
+            Num { value: -self.value }
+        }
+    }
+
+    let my_num_3 = Num { value: 5 };
+    // long story short we use Neg from standard library to make negative
+    let my_num_neg = -my_num_3;
+    println!("{}", my_num_neg.value);
+
+    //◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+    /*
+     * 3 ways to implement traits
+     * 1. Your traits on Foreign Types
+     * 2. Your Traits on Your Types
+     * 3. Foreign Trait on Your Types
+     */
+    //◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
