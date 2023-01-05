@@ -529,3 +529,35 @@ fn array_iters() {
         println!("{}", i);
     }
 }
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn enum_basics(num_of_wheels: i32) {
+    // create enum
+    enum CarOrBike {
+        Car,
+        Bike,
+    }
+    // use match to help return the enum Car | enum Bike
+    fn choose_vehicle(wheels: i32) -> CarOrBike {
+        match wheels {
+            0..=3 => CarOrBike::Bike,
+            _ => CarOrBike::Car,
+        }
+    }
+    // let check what enum was returned
+    fn check_my_ride(enum_state: &CarOrBike) {
+        match enum_state {
+            CarOrBike::Bike => println!("Bikes are fun but can be dangerous"),
+            CarOrBike::Car => println!("Cars are a bit safer with seat belts"),
+        }
+    }
+
+    let n = num_of_wheels;
+    let vehicle = choose_vehicle(n);
+    check_my_ride(&vehicle);
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
