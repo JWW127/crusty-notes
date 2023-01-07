@@ -10,6 +10,8 @@
 // char ---> 4 bytes, largest utf8 ---> 4 bytes
 // {:#?} pretty format for collections
 use std::fmt::Display;
+use std::str::FromStr;
+use strum_macros::EnumString;
 
 fn main() {}
 
@@ -560,4 +562,52 @@ fn enum_basics(num_of_wheels: i32) {
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn importing_enums_using_strum(avenger: &str) {
+    #[derive(Debug, PartialEq, EnumString)]
+    enum Hero {
+        Thor,
+        Ironman,
+        Spiderman,
+        Hulk,
+        BlackWidow,
+        Hawkeye,
+        CaptainAmerica,
+        DoctorStrange,
+        BlackPanther,
+    }
 
+    //see imported crate strum
+    fn parse_avenger(input: &str) -> Hero {
+        Hero::from_str(input).unwrap()
+    }
+
+    fn match_avenger(hero: &Hero) -> String {
+        // no need to call Hero::Hero_Name everytime we import the hero part
+        use Hero::*;
+        let my_avenger = match hero {
+            Thor => format!("Thor is cool"),
+            Ironman => format!("Tony Stark"),
+            Spiderman => format!("Peter Parker"),
+            Hulk => format!("Bruce Banner"),
+            BlackWidow => format!("Natasha"),
+            Hawkeye => format!("Clint"),
+            CaptainAmerica => format!("Steve Rogers"),
+            DoctorStrange => format!("Strange"),
+            BlackPanther => format!("chitala"),
+        };
+        my_avenger
+    }
+
+    let my_parsed_avenger_arg = parse_avenger(avenger);
+    let my_matched_avenger = match_avenger(&my_parsed_avenger_arg);
+    println!("{}", my_matched_avenger);
+
+    /*
+    There seems to be an possible bug with parse_avenger() as it can accept
+    any &str despite the fact that it may not match with match_avengers()
+    this will cause a panic. hmmmm, will have to review this in future.
+    */
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
