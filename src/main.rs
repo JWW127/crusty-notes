@@ -13,7 +13,9 @@ use std::fmt::Display;
 use std::str::FromStr;
 use strum_macros::EnumString;
 
-fn main() {}
+fn main() {
+    enums_have_ids()
+}
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -611,3 +613,50 @@ fn importing_enums_using_strum(avenger: &str) {
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+fn enums_have_ids() {
+    // enums have ids that increment
+    enum EnumId {
+        A,
+        B,
+        C,
+    }
+
+    println!(
+        "{:?},{:?},{:?}",
+        EnumId::A as i32,
+        EnumId::B as i8,
+        EnumId::C as u32
+    ); // 0,1,2
+
+    //◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+    //◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+    // enums can have assigned id if they dont hold data
+    enum EnumAssignedId {
+        X = 10,
+        Y = 20,
+        Z = 42,
+    }
+
+    println!(
+        "{:?},{:?},{:?}",
+        EnumAssignedId::X as i32,
+        EnumAssignedId::Y as i32,
+        EnumAssignedId::Z as i32
+    ); // 10,20,42
+
+    //◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+    //◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+    // enum id use cases
+    // we can create a vec from our enum
+    let enum_vec = vec![EnumAssignedId::X, EnumAssignedId::Y, EnumAssignedId::Z];
+    // loop over vec, for each enum match which returns print
+    for vec_item in enum_vec {
+        match vec_item as u32 {
+            id if id == 10 => println!("your id is 10"),
+            id if id == 20 => println!("your id is 20"),
+            id if id == 42 => println!("the answer to the universe is 42"),
+            _ => println!("your id isnt in our system"),
+        }
+    }
+}
