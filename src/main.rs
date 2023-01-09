@@ -1,6 +1,5 @@
 #![allow(dead_code)]
-#![allow(unused_variables)]
-#![allow(unused_parens)]
+#![allow(unused_parens, unused_variables, unused_labels)]
 
 //single line comment
 /* multi line comment */
@@ -13,9 +12,7 @@ use std::fmt::Display;
 use std::str::FromStr;
 use strum_macros::EnumString;
 
-fn main() {
-    enums_have_ids()
-}
+fn main() {}
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -659,4 +656,55 @@ fn enums_have_ids() {
             _ => println!("your id isnt in our system"),
         }
     }
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn methods_structs_usage() {
+    #[derive(Debug)]
+    struct Rect {
+        height: i32,
+        width: i32,
+    }
+
+    impl Rect {
+        fn get_area(&self) -> i32 {
+            self.height * self.width
+        }
+        fn get_perimeter(&self) -> i32 {
+            (self.height + self.width) * 2
+        }
+    }
+
+    let my_rect = Rect {
+        height: 5,
+        width: 5,
+    };
+
+    println!("{:?}", my_rect.get_area()); //25
+    println!("{:?}", my_rect.get_perimeter()); //20
+    dbg!(my_rect);
+    //dbg is for quick debugging basically pretty prints. be aware it also takes ownership
+    //moving dbg! above our prints will cause a mover error
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn naming_loops() {
+    let mut counter = 0;
+    let mut counter2 = 0;
+    'outer_loop: loop {
+        counter += 1;
+        // once we hit 5 we enter inner_loop
+        if counter > 5 {
+            // typically we get a warning for unused label
+            'inner_loop: loop {
+                counter2 += 1;
+                if counter2 > 5 {
+                    break 'outer_loop;
+                }
+            }
+        }
+    }
+    println!("Dobbie is free");
 }
