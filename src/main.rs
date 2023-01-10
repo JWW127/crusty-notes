@@ -708,3 +708,58 @@ fn naming_loops() {
     }
     println!("Dobbie is free");
 }
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn return_val_from_loop() {
+    let mut counter = 0;
+    let my_loop_return = loop {
+        counter += 1;
+        if counter > 5 {
+            //break & desired return value -> both exit loop and return val
+            break String::from("im a val returned from a loop");
+        }
+    };
+    println!("{}", my_loop_return);
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn using_a_while_loop() {
+    let mut counter = 0;
+    while counter < 5 {
+        counter += 1;
+        println!("{}", counter);
+    }
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn loop_range_tricks() {
+    //creating a demo vec of chars
+    let my_vec = vec!['a', 'b', 'c', 'd'];
+    // loop over our vec
+    for item in my_vec {
+        // print each item
+        println!("{}", item);
+    }
+    // loop over number range non-inclusive of 3
+    for item in 0..3 {
+        println!("{}", item) // 0,1,2
+    }
+    // loop over number range including 3
+    for item in 0..=3 {
+        println!("{}", item) // 0,1,2,3
+    }
+
+    /*
+    main syntax 'for in' loops
+    for (item) in (range) { do something }
+
+    main syntax 'while' loops
+    while (condition is true) { do something }
+
+    main syntax for pure 'loops'
+    'loop_name: loop { do something until 'break' keyword is hit}
+    */
+}
