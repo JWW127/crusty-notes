@@ -1,5 +1,5 @@
 #![allow(dead_code)]
-#![allow(unused_parens, unused_variables, unused_labels)]
+#![allow(unused_parens, unused_variables)]
 
 //single line comment
 /* multi line comment */
@@ -8,6 +8,8 @@
 // usize ---> 64bits
 // char ---> 4 bytes, largest utf8 ---> 4 bytes
 // {:#?} pretty format for collections
+// '_' == All/NA
+// '_name' == silence warnings will use later
 use std::fmt::Display;
 use std::str::FromStr;
 use strum_macros::EnumString;
@@ -31,7 +33,7 @@ fn casting_with_as() {
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 fn len_is_bytes() {
-    // NOTICE len is number of bytes not number of chars/elements
+    // NOTICE len is number of bytes for a char not number of elements
     // we can prove this by printing len of 2 differently byte sized chars
     println!("just a single char with a size of {} byte", "z".len()); // 1 byte
     println!("just a single char with a size of {} byte", "ʐ".len()); // 2 bytes
@@ -493,7 +495,9 @@ fn declare_methods(n: i32) {
     // this creates a method on our struct "FavNumber"
     // this is similar to traits but no trait just method
     impl FavNumber {
-        fn log_fav_number_plus_42(self) -> i32 {
+        // its probably better to use a ref when using self
+        // as ownership is transferred and then dropped if not returned
+        fn log_fav_number_plus_42(&self) -> i32 {
             self.value + 42
         }
     }
@@ -697,8 +701,8 @@ fn naming_loops() {
         counter += 1;
         // once we hit 5 we enter inner_loop
         if counter > 5 {
-            // typically we get a warning for unused label
-            'inner_loop: loop {
+            // prefix with '_' or typically we get a warning for unused label
+            '_inner_loop: loop {
                 counter2 += 1;
                 if counter2 > 5 {
                     break 'outer_loop;
@@ -725,6 +729,19 @@ fn return_val_from_loop() {
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn using_continue() {
+    // we can use the 'continue' keyword to give access to later code
+    // I like to think of it similar to a IF Else
+    for num in 1..=10 {
+        if num % 2 == 0 {
+            continue;
+        }
+        println!("even number"); //prints on even num
+    }
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 fn using_a_while_loop() {
     let mut counter = 0;
     while counter < 5 {
@@ -738,8 +755,8 @@ fn using_a_while_loop() {
 fn loop_range_tricks() {
     //creating a demo vec of chars
     let my_vec = vec!['a', 'b', 'c', 'd'];
-    // loop over our vec
-    for item in my_vec {
+    // loop over a ref of our vec
+    for item in &my_vec {
         // print each item
         println!("{}", item);
     }
@@ -750,6 +767,10 @@ fn loop_range_tricks() {
     // loop over number range including 3
     for item in 0..=3 {
         println!("{}", item) // 0,1,2,3
+    }
+    // loop over unused item
+    for _ in &my_vec {
+        println!("looping...") // looping
     }
 
     /*
@@ -763,3 +784,6 @@ fn loop_range_tricks() {
     'loop_name: loop { do something until 'break' keyword is hit}
     */
 }
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
