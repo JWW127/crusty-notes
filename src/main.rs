@@ -678,18 +678,45 @@ fn methods_structs_usage() {
         fn get_perimeter(&self) -> i32 {
             (self.height + self.width) * 2
         }
+        fn change_values(&mut self, height: i32, width: i32) {
+            self.width = width;
+            self.height = height;
+        }
     }
 
-    let my_rect = Rect {
+    let mut my_rect = Rect {
         height: 5,
         width: 5,
     };
 
-    println!("{:?}", my_rect.get_area()); //25
-    println!("{:?}", my_rect.get_perimeter()); //20
+    // change vals to 10
+    my_rect.change_values(10, 10);
+
+    println!("{:?}", my_rect.get_area()); //100
+    println!("{:?}", my_rect.get_perimeter()); //40
     dbg!(my_rect);
     //dbg is for quick debugging basically pretty prints. be aware it also takes ownership
     //moving dbg! above our prints will cause a mover error
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn associated_struct_creation_methods() {
+    // unique methods for creating instances of self
+    struct Fruit {
+        name: String,
+    }
+
+    impl Fruit {
+        // creating our associated function
+        fn new(fruit: String) -> Self {
+            Self { name: fruit }
+        }
+        //NOTE the 'new' fn name is not a keyword just tradition/idiomatic
+    }
+    //NOTICE we have a different instatiation syntax
+    let apple = Fruit::new(String::from("apple"));
+    println!("{}", apple.name);
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
