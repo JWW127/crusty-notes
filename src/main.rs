@@ -1,8 +1,9 @@
 #![allow(dead_code)]
-#![allow(unused_parens, unused_variables)]
+#![allow(unused_parens, unused_must_use, unused_variables)]
 
 //single line comment
 /* multi line comment */
+use rusqlite::{Connection, Result};
 /// docs comment
 // u8 ---> 8bits
 // usize ---> 64bits
@@ -14,7 +15,9 @@ use std::fmt::Display;
 use std::str::FromStr;
 use strum_macros::EnumString;
 
-fn main() {}
+fn main() {
+    rusqlite_usage();
+}
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -810,6 +813,64 @@ fn loop_range_tricks() {
     main syntax for pure 'loops'
     'loop_name: loop { do something until 'break' keyword is hit}
     */
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn rusqlite_usage() -> Result<()> {
+    // quick and dirty use of rusqlite to connect to sqlite database
+    // insert our struct user data
+
+    // we'll need a struct for this example
+    #[derive(Debug)]
+    struct User {
+        id: i32,
+        name: String,
+        data: Option<Vec<u8>>,
+    }
+
+    // instantiate our struct with our data 'me'
+    let me = User {
+        id: 0,
+        name: "Joseph".to_string(),
+        data: None,
+    };
+
+    // create our db connection, if no db create one at provide path
+    let conn = Connection::open("./test.db")?;
+
+    // open connection create a table called 'user' with a id,name,data
+    conn.execute(
+        "CREATE TABLE user (
+            id INTEGER PRIMARY KEY, 
+            name TEXT NOT NULL,
+            data BLOB
+        )",
+        (),
+    )?;
+
+    // open connection Insert our 'me' values into our previously created table
+    conn.execute(
+        "INSERT INTO user (name, data) VALUES (?1, ?2)",
+        (&me.name, &me.data),
+    )?;
+
+    // prepare a sql query statement that targets our database/table values of id, name, data
+    let mut stmt = conn.prepare("SELECT id, name, data FROM user")?;
+    // use our prepared statement to map over our db data and create a iterable
+    let user_iter = stmt.query_map([], |row| {
+        Ok(User {
+            id: row.get(0)?,
+            name: row.get(1)?,
+            data: row.get(2)?,
+        })
+    })?;
+
+    // iterate over iterable we created above and print the values
+    for user in user_iter {
+        println!("{:?}", user.unwrap());
+    }
+    Ok(())
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
