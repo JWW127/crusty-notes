@@ -15,9 +15,7 @@ use std::fmt::Display;
 use std::str::FromStr;
 use strum_macros::EnumString;
 
-fn main() {
-    error_checking_with_results()
-}
+fn main() {}
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -953,6 +951,34 @@ fn error_checking_with_results() {
         Ok(res_777) // this isnt unwrapped tho it is safe
     }
     println!("{:?}", return_ok_macro(777).unwrap())
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn destructuring_structs() {
+    // standard struct creation
+    struct User {
+        id: u32,
+        name: String,
+        age: u32,
+    }
+
+    //standard struct instantiation
+    let gandalf = User {
+        id: 1,
+        name: "Mithrandir".to_string(),
+        age: 24000,
+    };
+
+    // instead of getting the data by dot notation we can just destucture
+    // syntax: let STRUCT_NAME {field: alias, field2: alias, field3: alias} = variable
+    let User {
+        id: lotr_id,
+        name: lotr_character,
+        age: lotr_age,
+    } = gandalf;
+
+    println!("{}", lotr_character); //"Mithrandir"
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
