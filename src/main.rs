@@ -15,7 +15,9 @@ use std::fmt::Display;
 use std::str::FromStr;
 use strum_macros::EnumString;
 
-fn main() {}
+fn main() {
+    error_checking_with_results()
+}
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -826,6 +828,19 @@ fn loop_range_tricks() {
     */
 }
 
+fn extending_iters() {
+    // create our first iterable type, mut vec
+    let mut v1 = vec![1, 2, 3];
+    // we can extend(add to) with like collection types
+    let v2 = vec![4, 5, 6];
+    // this is an array but the contained types match
+    let a1 = [42, 69];
+
+    v1.extend(v2.iter());
+    v1.extend(a1.iter());
+    println!("{:?}", v2); // 1,2,3,4,5,6,42,69
+}
+
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 fn rusqlite_usage() -> Result<()> {
@@ -906,3 +921,39 @@ fn options_some_none() {
         }
     )
 }
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn error_checking_with_results() {
+    // you must have a fn that returns Result enum values Ok & Err
+    fn return_ok_int(x: u32) -> Result<u32, String> {
+        if x != 0 {
+            Ok(x)
+        } else {
+            Err("not a u32".to_string())
+        }
+    }
+    // lets make a call to it and save the result 4 times. 3xOk 1xErr
+    let res_42 = return_ok_int(42);
+    let res_69 = return_ok_int(69);
+    //let res_err = return_ok_int(3 - 4); // this will Err as it is -1
+    // lets unwrap the first one, although unwrapping is unsafe
+    println!("{}", res_42.unwrap()); //42 , but not 100% safe
+                                     // we can be safer by treating our Result with a match
+    let res_match_check = match res_69 {
+        Ok(val) => val,
+        Err(_) => 0,
+    };
+    // the added benefit of doing a match is Ok will unwrap without explicit call
+    println!("{}", res_match_check); //69
+
+    // this process is so common rust made a macro allowing you to skip the match
+    fn return_ok_macro(x: u32) -> Result<u32, String> {
+        let res_777 = return_ok_int(x)?;
+        Ok(res_777) // this isnt unwrapped tho it is safe
+    }
+    println!("{:?}", return_ok_macro(777).unwrap())
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
