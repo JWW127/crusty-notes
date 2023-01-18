@@ -11,7 +11,7 @@ use rusqlite::{Connection, Result};
 // {:#?} pretty format for collections
 // '_' == All/NA
 // '_name' == silence warnings will use later
-use std::fmt::Display;
+use std::fmt::{Debug, Display};
 use std::str::FromStr;
 use strum_macros::EnumString;
 
@@ -478,6 +478,37 @@ fn generic_types<T: Display>(arg: T) {
     // generic fuction that has generic type 'T' that implements 'Display' trait
     // when a generic type implements a trait we call that a 'constraint'
     println!("{}", arg);
+}
+//◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+//◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+fn working_with_larger_generics() {
+    // we need this to show how where can be used for generic traits
+    #[derive(Debug)]
+    struct Status {
+        running: bool,
+    }
+
+    let chicago = Status { running: true };
+    let austin = Status { running: true };
+    let vegas = Status { running: false };
+    let seattle = Status { running: true };
+
+    // using 'where' to indicate traits for our generic types
+    fn generic_types_with_where<T, U, V, W>(server_0: T, server_1: U, status_0: V, status_1: W)
+    where
+        T: Display,
+        U: Display,
+        V: Debug,
+        W: Debug,
+    {
+        println!("## server: {} === ACTIVE: {:?} ##", server_0, status_0);
+        println!("## server: {} === ACTIVE: {:?} ##", server_1, status_1);
+    }
+
+    // let give it a call
+    generic_types_with_where(0, 1, chicago, austin);
+    // let give it another call but with named servers and drill down our struct type
+    generic_types_with_where("vegas", "seattle", vegas.running, seattle.running);
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
