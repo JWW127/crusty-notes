@@ -951,6 +951,29 @@ fn options_some_none() {
     )
 }
 
+fn options_if_else() {
+    fn gt_42(val: i32) -> Option<i32> {
+        if val < 42 {
+            None
+        } else {
+            Some(val)
+        }
+    }
+
+    let my_num = 69;
+    let my_num2 = 7;
+    let my_num3 = 1;
+    println!("{:?}", gt_42(my_num).unwrap()); //unwrap panics on none, thats bad
+    //
+    println!("{:?}", gt_42(my_num2).expect("needs to be greater than 42")); //better than unwrap
+
+    // even better is to use a match to handle errors
+    match gt_42(my_num3) {
+        Some(num) => println!("{} is greater than 42", num),
+        None => println!("error number needs to be greater than 42"),
+    }
+}
+
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 fn error_checking_with_results() {
