@@ -964,7 +964,7 @@ fn options_if_else() {
     let my_num2 = 7;
     let my_num3 = 1;
     println!("{:?}", gt_42(my_num).unwrap()); //unwrap panics on none, thats bad
-    //
+                                              //
     println!("{:?}", gt_42(my_num2).expect("needs to be greater than 42")); //better than unwrap
 
     // even better is to use a match to handle errors
@@ -1005,6 +1005,11 @@ fn error_checking_with_results() {
         Ok(res_777) // this isnt unwrapped tho it is safe
     }
     println!("{:?}", return_ok_macro(777).unwrap())
+    /*
+    other ways to unwrap safely
+        '.is_some()' method checks if attached variable is a 'some' value returns bool
+        'unwrap_or(default)' if none value returns default esle returns some value
+    */
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
