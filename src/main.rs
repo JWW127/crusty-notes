@@ -928,6 +928,10 @@ fn rusqlite_usage() -> Result<()> {
     Ok(())
 }
 
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓NOTES▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+// How we might like to think about Options and Results
+// Options - have something or nothing
+// Results - have an OK or a Err, it will work or will return an error
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 fn options_some_none() {
@@ -972,6 +976,11 @@ fn options_if_else() {
         Some(num) => println!("{} is greater than 42", num),
         None => println!("error number needs to be greater than 42"),
     }
+    /*
+    other ways to unwrap safely
+        '.is_some()' method checks if attached variable is a 'some' value returns bool
+        '.unwrap_or(default)' if none value returns default esle returns some value
+    */
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -1005,11 +1014,6 @@ fn error_checking_with_results() {
         Ok(res_777) // this isnt unwrapped tho it is safe
     }
     println!("{:?}", return_ok_macro(777).unwrap())
-    /*
-    other ways to unwrap safely
-        '.is_some()' method checks if attached variable is a 'some' value returns bool
-        'unwrap_or(default)' if none value returns default esle returns some value
-    */
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -1042,3 +1046,27 @@ fn destructuring_structs() {
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn result_is_ok_method(allow: bool) {
+    fn returns_a_result(allow: bool) -> Result<(), ()> {
+        if allow == true {
+            Ok(())
+        } else {
+            Err(())
+        }
+    }
+
+    let res = returns_a_result(allow);
+
+    // using .is_ok method
+    if res.is_ok() {
+        println!("is_ok: ✔")
+    } else {
+        println!("is_ok: ✘ (err present)")
+    }
+    // using .is_err
+    if res.is_err() {
+        println!("is_err: ✔")
+    } else {
+        println!("is_err: ✘ (ok present)")
+    }
+}
