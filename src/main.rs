@@ -1070,3 +1070,26 @@ fn result_is_ok_method(allow: bool) {
         println!("is_err: ✘ (ok present)")
     }
 }
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+fn option_is_some_method(num: i32) {
+    fn returns_a_opt(val: i32) -> Option<i32> {
+        if val == 42 {
+            Some(val)
+        } else {
+            None
+        }
+    }
+    let opt = returns_a_opt(num);
+
+    // using .is_some()
+    if opt.is_some() {
+        println!("is_opt: ✔")
+    }
+    // using .is_none()
+    if opt.is_none() {
+        println!("is_none: ✘")
+    }
+}
