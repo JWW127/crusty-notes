@@ -1116,3 +1116,48 @@ fn option_get_method() {
     }
     // prints out only the 'Some' values unwrapped a,b,c
 }
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn slice_gets_derefs() {
+    //create array
+    let num_arr = [1, 2, 3, 4, 5];
+    //create slice of entire array
+    let num_slice = &num_arr[..];
+
+    //what happens when we GET valid idx
+    let valid_idx = num_slice.get(0);
+    println!("valid.get: {:?}", valid_idx); // Some(1)
+    let invalid_idx = num_slice.get(99);
+    println!("invalid.get: {:?}", invalid_idx); // None
+
+    // you can get value with unwrap
+    let valid_unwrap = valid_idx.unwrap();
+    println!("valid.get: {:?}", valid_unwrap); // 1
+
+    let valid_idx_two = num_slice.get(1);
+    // you can deref when unwrapped (see type dif)
+    let valid_unwrap_deref = *valid_idx_two.unwrap();
+    println!("valid deref: {:?}", valid_unwrap_deref); //2
+
+    // unwrapping a "None" will cause a panic.
+
+    let invalid_idx_two = num_slice.get(42);
+    //  instead of panic unwarp_or
+    let special_unwrap = invalid_idx_two.unwrap_or(&42);
+    println!("special: {:?}", special_unwrap); //42
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn vec_into_iter_closure_collect() {
+    let my_arr = vec![10, 20, 30, 40, 50];
+    // read like, turn our vec into an iter, map over it, closing over every val
+    // adding 5, then collect into a vec
+    let my_closed_iter: Vec<i32> = my_arr.into_iter().map(|num| num + 5).collect();
+
+    println!("{:?}", my_closed_iter); //[15, 25, 35, 45, 55]
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
