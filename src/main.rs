@@ -1073,7 +1073,6 @@ fn result_is_ok_method(allow: bool) {
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-
 fn option_is_some_method(num: i32) {
     fn returns_a_opt(val: i32) -> Option<i32> {
         if val == 42 {
@@ -1092,4 +1091,28 @@ fn option_is_some_method(num: i32) {
     if opt.is_none() {
         println!("is_none: ✘")
     }
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn option_get_method() {
+    let my_vec = vec!['a', 'b', 'c'];
+    let get_idx_0 = my_vec.get(0);
+    let get_idx_5 = my_vec.get(5); //note idx 5 doesnt exist
+
+    // get will allow us to try to get idx 5 and not crash instead get a None
+    println!("idx_0: {:?}, idx_5: {:?}", get_idx_0, get_idx_5);
+    // idx_0: Some('a'), idx_5: None
+
+    //◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+    //◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦◦
+    // we can use .get in a for in loop
+    for idx in 0..10 {
+        // if idx is in range assign to Some(num) and print
+        // if its not in range it is a none and dont assign
+        if let Some(num) = my_vec.get(idx) {
+            println!("{}: in range", num);
+        }
+    }
+    // prints out only the 'Some' values unwrapped a,b,c
 }
