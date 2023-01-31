@@ -16,7 +16,7 @@ use std::str::FromStr;
 use strum_macros::EnumString;
 
 fn main() {
-    vec_remove_sort_dedup()
+    enum_match_game_example();
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -1214,4 +1214,47 @@ fn box_the_smart_pointer() {
     // - have a large value you want to put on heap to save space on stack
     // - expiring lifetime that should be moved to another scope
     // - recursive data structure that would otherwise create a stack overflow
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn enum_match_game_example() {
+    // different possible states of a game
+    enum State {
+        Start,
+        Running { hp: u32 },
+        GameOver(GoAnimation),
+    }
+
+    enum GoAnimation {
+        Active,
+        NotActive,
+    }
+
+    // our starting state
+    let mut state = State::Start;
+    // loop / match to update our state accordingly
+    loop {
+        match state {
+            State::Start => {
+                println!("Game Started");
+                state = State::Running { hp: 100 } //what state will be after start
+            }
+            State::Running { hp: 0 } => {
+                state = State::GameOver(GoAnimation::Active);
+                println!("GG YOU'RE DEAD");
+            }
+            State::Running { ref mut hp } => {
+                *hp -= 25;
+                println!("OUCH TOOK 25 DMG");
+            }
+            State::GameOver(GoAnimation::Active) => {
+                println!("Exiting Game");
+                state = State::GameOver(GoAnimation::NotActive)
+            }
+            State::GameOver(GoAnimation::NotActive) => break,
+        }
+    }
+    println!("Main Menu")
+    //this is basically paraphrase of togglebits example
 }
