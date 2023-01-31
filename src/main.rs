@@ -15,7 +15,9 @@ use std::fmt::{Debug, Display};
 use std::str::FromStr;
 use strum_macros::EnumString;
 
-fn main() {}
+fn main() {
+    vec_remove_sort_dedup()
+}
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -1161,3 +1163,55 @@ fn vec_into_iter_closure_collect() {
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn chunks() {
+    // create you have an arr or vec
+    let my_vec = vec![2, 4, 6, 8, 10, 12, 14, 16, 18, 20];
+    // we just want a slice to work with
+    let my_slice = &my_vec[1..];
+
+    // we can loop our slice and chunk with for in loop
+    for a_chunk in my_slice.chunks(2) {
+        println!("{:?}", a_chunk);
+    }
+    // we can expect out put to be chunks of 2 &[i32] from our vec
+    // [4,6]
+    // [8,10]
+    // [12,14]
+    // [16,18]
+    // [20] // note when theres is no more to chunk it will use whats left
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn vec_remove_sort_dedup() {
+    //notice we missing 4 and 5, also 42 shouldnt be there
+    let mut my_vec_v1 = vec![1, 2, 3, 6, 42, 7, 8];
+    my_vec_v1.insert(3, 4); //[1, 2, 3, 4, 6, 42, 7, 8];
+    my_vec_v1.insert(4, 5); //[1, 2, 3, 4, 5, 6, 42, 7, 8];
+    my_vec_v1.remove(6); //[1, 2, 3, 4, 5, 6, 7, 8];
+
+    println!("{:?}", my_vec_v1);
+
+    let mut v2 = vec![1, 10, 5, 1, 2, 11, 2, 40];
+    v2.sort();
+    v2.dedup(); // will extra 1s and 2s
+
+    println!("{:?}", v2); // [1, 2, 5, 10, 11, 40];
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn box_the_smart_pointer() {
+    // we can use box to add to heap and have pointer to it
+    let b = Box::new(42);
+    println!("{:p}", b);
+    // 1. of the benefits of box is story dynamic size types on heap
+    // dsts have the special ?Sized bound
+    // dsts - slices, trait objs, structs
+    // 2. you can transfer ownership of boxed values
+    //
+    // Indicators we might want to use box
+    // - have a large value you want to put on heap to save space on stack
+    // - expiring lifetime that should be moved to another scope
+    // - recursive data structure that would otherwise create a stack overflow
+}
