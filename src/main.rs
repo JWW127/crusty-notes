@@ -1288,3 +1288,14 @@ fn cloning_better_with_iter_map() {
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn idx_vs_get() {
+    //there are some important differences between vec[idx] and vec.get(idx)
+    let a_vec = vec![1, 2, 3];
+    let via_idx = &a_vec[0]; //type is &i32
+    let via_get = &a_vec.get(0); //type &option<&i32>
+                                 //get returns a option which we can then use for match some/none
+    match via_get {
+        Some(via_get) => println!("{via_get}"), //1
+        None => println!("something is up"),
+    }
+}
