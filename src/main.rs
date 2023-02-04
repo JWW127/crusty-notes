@@ -2,7 +2,7 @@
 #![allow(unused_parens, unused_must_use, unused_variables)]
 mod errorhandling;
 
-//single line comment
+//single line comment ⚠️ ✅❌❗☠️ 🥰
 /* multi line comment */
 use rusqlite::{Connection, Result};
 use std::collections::BTreeMap;
@@ -18,9 +18,7 @@ use std::fmt::{Debug, Display};
 use std::str::FromStr;
 use strum_macros::EnumString;
 
-fn main() {
-    btreemap_basics();
-}
+fn main() {}
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -39,7 +37,7 @@ fn casting_with_as() {
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 fn len_is_bytes() {
-    // NOTICE len is number of bytes for a char not number of elements
+    // ⚠️ len is number of bytes for a char not number of elements
     // we can prove this by printing len of 2 differently byte sized chars
     println!("just a single char with a size of {} byte", "z".len()); // 1 byte
     println!("just a single char with a size of {} byte", "ʐ".len()); // 2 bytes
@@ -220,7 +218,7 @@ fn vecs() {
     // vecs assign a capacity based on contents, increments of 4
     println!("{}", my_vec.capacity()); // 4
 
-    // notice capacity jumps to 8 when we have 5 items
+    // ⚠️ capacity jumps to 8 when we have 5 items
     my_vec.push("peach");
     my_vec.push("bowser");
     my_vec.push("yoshi");
@@ -762,9 +760,9 @@ fn associated_struct_creation_methods() {
         fn new(fruit: String) -> Self {
             Self { name: fruit }
         }
-        //NOTE the 'new' fn name is not a keyword just tradition/idiomatic
+        //⚠️ the 'new' fn name is not a keyword just tradition/idiomatic
     }
-    //NOTICE we have a different instatiation syntax
+    //⚠️ we have a different instatiation syntax
     let apple = Fruit::new(String::from("apple"));
     println!("{}", apple.name);
 }
@@ -1187,7 +1185,7 @@ fn chunks() {
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 fn vec_remove_sort_dedup() {
-    //notice we missing 4 and 5, also 42 shouldnt be there
+    //⚠️ we missing 4 and 5, also 42 shouldnt be there
     let mut my_vec_v1 = vec![1, 2, 3, 6, 42, 7, 8];
     my_vec_v1.insert(3, 4); //[1, 2, 3, 4, 6, 42, 7, 8];
     my_vec_v1.insert(4, 5); //[1, 2, 3, 4, 5, 6, 42, 7, 8];
@@ -1383,6 +1381,68 @@ fn btreemap_basics() {
 
     metropolis.name = "Metropolis".to_string();
 
-    // NOTICE this is the same as the gotham example above except our print is sorted
+    // ⚠️ this is the same as the gotham example above except our print is sorted
     println!("metropolis: {:#?}", metropolis);
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn working_with_strings() {
+    //strings can get weird
+
+    /*⚠️ to append to a string you must add type (1:String, 2:&str)
+     * what problems does this cause?
+     * - by appending we give ownership to 1:String, so maybe we clone?
+     * - what if we have to append multiple &str to the string?
+     * - should we convert &str to 1:String to satisfy our needs?
+     */
+
+    // Example 1
+    let mut hot_string = "hot".to_string(); //⚠️ mut, 'push_str' requires it
+    let dog_slice = "dog";
+    hot_string.push_str(dog_slice);
+    let hotdog = hot_string;
+    println!("{}", hotdog); //hotdog
+
+    // Example 2
+    let string_cheese = "cheese".to_string();
+    let burger_slice = "burger";
+    let cheeseburger = string_cheese + burger_slice;
+    println!("{}", cheeseburger); //cheeseburger
+
+    // Example 3
+    let french_slice = "french";
+    let fries_string = "fries".to_string();
+    // ⚠️ you cant append to a &str french_slice must be a string and fries slice
+    let frenchfries = french_slice.to_string() + &fries_string;
+    println!("{}", frenchfries);
+
+    // Example 4
+    let peanut_string = "peanut".to_string();
+    let butter_string = "butter".to_string();
+    let jelly_string = "jelly".to_string();
+    // ⚠️ we had to convert butter and jelly to &str
+    let peanut_butter_jelly = peanut_string + &butter_string + "&" + &jelly_string;
+    println!("{}", peanut_butter_jelly);
+
+    // Example 5
+    let kentucky_string = String::from("Kentucky");
+    let fried_string = String::from("Fried");
+    let chicken_string = String::from("Chicken");
+    let kfc = format!("{kentucky_string} {fried_string} {chicken_string}");
+    println!("{}", kfc); // Kentucky Fried Chicken
+
+    //⚠️ rust does not provide idx string[idx] access of a string it must be a slice
+
+    // Example 6
+    let pizza = "pizza".to_string();
+    // use slice notation to get specific characters in string
+    let i = &pizza[1..2];
+    println!("{}", i); //i
+
+    // Example 7 looping over strings
+    let spaghetti = "spaghetti".to_string();
+    for c in spaghetti.chars() {
+        println!("{c}"); // s,p,a,g,h,e,t,t,i
+    }
 }
