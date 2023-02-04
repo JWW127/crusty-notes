@@ -5,6 +5,8 @@ mod errorhandling;
 //single line comment
 /* multi line comment */
 use rusqlite::{Connection, Result};
+use std::collections::BTreeMap;
+use std::collections::HashMap;
 /// docs comment
 // u8 ---> 8bits
 // usize ---> 64bits
@@ -16,7 +18,9 @@ use std::fmt::{Debug, Display};
 use std::str::FromStr;
 use strum_macros::EnumString;
 
-fn main() {}
+fn main() {
+    btreemap_basics();
+}
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -1298,4 +1302,87 @@ fn idx_vs_get() {
         Some(via_get) => println!("{via_get}"), //1
         None => println!("something is up"),
     }
+
+    // this is important distinction because
+    // vec[out of range] is a panic
+    // vec.get(out of range) is a None
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn hashmap_basics() {
+    // we'll need a struct for demo
+    #[derive(Debug)]
+    struct City {
+        name: String,
+        population: HashMap<u32, u32>,
+        retired: HashMap<u32, u32>,
+        employed: HashMap<u32, u32>,
+    }
+
+    // instantiate
+    let mut gotham = City {
+        name: "Gotham".to_string(),
+        population: HashMap::new(),
+        retired: HashMap::new(),
+        employed: HashMap::new(),
+    };
+
+    gotham.population.insert(2020, 200000);
+    gotham.population.insert(2021, 300000);
+    gotham.population.insert(2022, 400000);
+    gotham.retired.insert(2020, 40000);
+    gotham.retired.insert(2021, 42000);
+    gotham.retired.insert(2022, 69000);
+
+    // instead of hardcoding values we can use previously
+    // entered values to calc our next insert
+    for (k, v) in gotham.population.iter() {
+        let retired = gotham.retired.get(&k);
+        let civ = v - retired.unwrap();
+        gotham.employed.insert(*k, civ); // remember our insert here is <u32, u32>
+    }
+
+    gotham.name = "Arkham".to_string();
+    // Below will be unsorted, one way to sort is to use BTreeMap (essentially replace HashMap with
+    // BTreeMap)
+    println!("gotham: {:#?}", gotham);
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn btreemap_basics() {
+    // we'll need a struct for demo
+    #[derive(Debug)]
+    struct City {
+        name: String,
+        population: BTreeMap<u32, u32>,
+        retired: BTreeMap<u32, u32>,
+        employed: BTreeMap<u32, u32>,
+    }
+
+    let mut metropolis = City {
+        name: "metropolis".to_string(),
+        population: BTreeMap::new(),
+        retired: BTreeMap::new(),
+        employed: BTreeMap::new(),
+    };
+
+    metropolis.population.insert(2020, 200000);
+    metropolis.population.insert(2021, 300000);
+    metropolis.population.insert(2022, 400000);
+    metropolis.retired.insert(2020, 40000);
+    metropolis.retired.insert(2021, 42000);
+    metropolis.retired.insert(2022, 69000);
+
+    for (k, v) in metropolis.population.iter() {
+        let retired = metropolis.retired.get(&k);
+        let civ = v - retired.unwrap();
+        metropolis.employed.insert(*k, civ);
+    }
+
+    metropolis.name = "Metropolis".to_string();
+
+    // NOTICE this is the same as the gotham example above except our print is sorted
+    println!("metropolis: {:#?}", metropolis);
 }
