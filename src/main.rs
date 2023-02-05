@@ -1348,13 +1348,31 @@ fn hashmap_basics() {
     for (k, v) in gotham.population.iter() {
         let retired = gotham.retired.get(&k).copied().unwrap_or(0);
         let civ = v - retired;
-        gotham.employed.insert(*k, civ); // remember our insert here is <u32, u32>
+        // entry = check if *k exist and has value, if it does do nothing
+        // else create the *k and enter civ as value
+        gotham.employed.entry(*k).or_insert(civ); //each <k,v> = <u32,u32>
     }
 
     gotham.name = "Arkham".to_string();
     // Below will be unsorted, one way to sort is to use BTreeMap (essentially replace HashMap with
     // BTreeMap)
     println!("gotham: {:#?}", gotham);
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn hashmap_to_track_word_count() {
+    let text = "Fear is the mind-killer Fear is the little-death that brings total obliteration I will face my Fear I will permit it to pass over me and through me";
+    let mut map = HashMap::new();
+
+    // loop over text for every word check if it is a key with a value, if it is increment count, if not
+    // use the word as a key and make 0 the value, then increment count
+    for word in text.split_whitespace() {
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+
+    println!("{:#?}", map);
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -1391,7 +1409,8 @@ fn btreemap_basics() {
 
     metropolis.name = "Metropolis".to_string();
 
-    // ⚠️ this is the same as the gotham example above except our print is sorted
+    // ⚠️ this is more or less the same as the gotham example above except
+    // our print is sorted
     println!("metropolis: {:#?}", metropolis);
 }
 
