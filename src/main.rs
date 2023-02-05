@@ -1309,6 +1309,14 @@ fn idx_vs_get() {
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 fn hashmap_basics() {
+    /*
+    ✅Are stored on the heap
+    ✅Are varibale in size
+    ⚠️ Keys and values of entries must be of same type
+    ⚠️ Copy types or those with the copy trait like i32 are copied into hashmap
+      while owned types like strings will be move ownership
+    */
+
     // we'll need a struct for demo
     #[derive(Debug)]
     struct City {
@@ -1335,9 +1343,11 @@ fn hashmap_basics() {
 
     // instead of hardcoding values we can use previously
     // entered values to calc our next insert
+    // we use copied to convert Option<&u32> into a regular Option<u32>
+    // allowing us to do our math arithmetic withouth needing to create a ref
     for (k, v) in gotham.population.iter() {
-        let retired = gotham.retired.get(&k);
-        let civ = v - retired.unwrap();
+        let retired = gotham.retired.get(&k).copied().unwrap_or(0);
+        let civ = v - retired;
         gotham.employed.insert(*k, civ); // remember our insert here is <u32, u32>
     }
 
@@ -1374,8 +1384,8 @@ fn btreemap_basics() {
     metropolis.retired.insert(2022, 69000);
 
     for (k, v) in metropolis.population.iter() {
-        let retired = metropolis.retired.get(&k);
-        let civ = v - retired.unwrap();
+        let retired = metropolis.retired.get(&k).copied().unwrap_or(0);
+        let civ = v - retired;
         metropolis.employed.insert(*k, civ);
     }
 
