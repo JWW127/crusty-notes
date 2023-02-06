@@ -16,9 +16,12 @@ use std::collections::HashMap;
 // '_name' == silence warnings will use later
 use std::fmt::{Debug, Display};
 use std::str::FromStr;
+//use std::str::SplitWhitespace;
 use strum_macros::EnumString;
 
-fn main() {}
+fn main() {
+    hashmap_to_track_word_count()
+}
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
