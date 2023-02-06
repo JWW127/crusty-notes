@@ -20,7 +20,7 @@ use std::str::FromStr;
 use strum_macros::EnumString;
 
 fn main() {
-    hashmap_to_track_word_count()
+    binary_heap_basics();
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -1417,6 +1417,38 @@ fn btreemap_basics() {
     println!("metropolis: {:#?}", metropolis);
 }
 
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn binary_heap_basics() {
+    // the main benefit of binary heaps as we can predict the first return
+    // as it will always be the largest
+    let mut my_b_heap = std::collections::BinaryHeap::new();
+    my_b_heap.push(42);
+    my_b_heap.push(1);
+    my_b_heap.push(3);
+    my_b_heap.push(5);
+    my_b_heap.push(7);
+    my_b_heap.push(9);
+    my_b_heap.push(11);
+    while let Some(num) = my_b_heap.pop() {
+        println!("heap 1: {:?}", num)
+    }
+    //★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
+    println!("\n");
+    //★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
+    // another example to prove largest is first return
+    let mut my_b_heap_2 = std::collections::BinaryHeap::new();
+    my_b_heap_2.push(3);
+    my_b_heap_2.push(6);
+    my_b_heap_2.push(9);
+    my_b_heap_2.push(43);
+    my_b_heap_2.push(12);
+    my_b_heap_2.push(15);
+    my_b_heap_2.push(18);
+    while let Some(num) = my_b_heap_2.pop() {
+        println!("heap 2: {:?}", num)
+    }
+}
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 fn working_with_strings() {
