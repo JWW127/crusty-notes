@@ -19,9 +19,7 @@ use std::str::FromStr;
 //use std::str::SplitWhitespace;
 use strum_macros::EnumString;
 
-fn main() {
-    binary_heap_basics();
-}
+fn main() {}
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -1508,5 +1506,16 @@ fn working_with_strings() {
     let spaghetti = "spaghetti".to_string();
     for c in spaghetti.chars() {
         println!("{c}"); // s,p,a,g,h,e,t,t,i
+    }
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn vecdeque_basics() {
+    //Vecdeque is a specialized vec that excels at left shift from pop_front
+    //VecDeque uses ring buffers to acheive significat speed over standard vecs
+    let mut my_vec_deque = std::collections::VecDeque::from(vec![0, 690_000]);
+    for i in 0..600000 {
+        my_vec_deque.pop_front();
     }
 }
