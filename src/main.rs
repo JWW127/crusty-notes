@@ -319,7 +319,8 @@ fn structs() {
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 fn if_let_statement(a: bool) {
     let condition = a;
-    //you can asign conditionals similar to funcs in js
+    //you can asign conditionals similar to ternary in js
+    // var = condition ? true : false
     let my_num = if condition { 27 } else { 42 };
     // types must match if change { 42 } to { "42"} we get an error
     println!("{my_num}");
@@ -895,7 +896,7 @@ fn rusqlite_usage() -> Result<()> {
         data: None,
     };
 
-    // create our db connection, if no db create one at provide path
+    // create our db connection, if no db create one at provided path
     let conn = Connection::open("./test.db")?;
 
     // open connection create a table called 'user' with a id,name,data
@@ -1207,7 +1208,7 @@ fn box_the_smart_pointer() {
     // we can use box to add to heap and have pointer to it
     let b = Box::new(42);
     println!("{:p}", b);
-    // 1. of the benefits of box is story dynamic size types on heap
+    // 1. of the benefits of box is storing dynamic size types on heap
     // dsts have the special ?Sized bound
     // dsts - slices, trait objs, structs
     // 2. you can transfer ownership of boxed values

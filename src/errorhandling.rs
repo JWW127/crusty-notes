@@ -11,7 +11,7 @@ use std::fs;
 - errors that can be tried again, (file not found, input validation, etc)
 - can use Result<T,E>
 
-#2 Recoverable
+#2 Non-Recoverable
 - product of bugs, (out of range)
 - can use panic! to stop execution
 */
