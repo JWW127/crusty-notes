@@ -2,6 +2,7 @@
 #![allow(unused_parens, unused_must_use, unused_variables)]
 
 use std::fs;
+use std::io::{self, Read};
 
 /*
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -70,7 +71,7 @@ pub fn err_main() {
     }
 
     //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-    //▓             Non existent Files           ▓
+    //▓          Panic Non existent Files        ▓
     //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
     // We can use match + file create + panic to satisfy our error
     fn no_file_found() {
@@ -103,5 +104,43 @@ pub fn err_main() {
                 panic!("Problem accessing the file {:?}", error);
             }
         });
+    }
+
+    //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+    //▓          Propagate Errors                ▓
+    //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+    fn skeleton_propagate() -> Result<String, io::Error> {
+        // the main idea is that the error is returned and handled by calling fn
+
+        //🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀
+        let my_file = std::fs::File::open("doesnt_exist.txt");
+
+        // file exist store in 'get_file' else return Err
+        let mut get_file = match my_file {
+            Ok(file) => file,
+            Err(e) => return Err(e),
+        };
+        //🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀🦀
+        //
+        let mut val = String::new();
+
+        //🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑
+        // call read to string on 'get_file' store result in val if Ok
+        // else return Err
+        match get_file.read_to_string(&mut val) {
+            Ok(_) => Ok(val),
+            Err(e) => Err(e),
+        }
+        //🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑🦑
+        // now its up to calling fn to decide what to do with return
+        // depending on info it can panic or use default value
+    }
+
+    fn shorthand_propagate() -> Result<String, io::Error> {
+        let mut val = String::new();
+        // following line up to '?' replaces 🦀code block above
+        // everything after the '?' replaces 🦑code block above
+        std::fs::File::open("doesnt_exist.txt")?.read_to_string(&mut val);
+        Ok(val)
     }
 }
