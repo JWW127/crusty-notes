@@ -1,12 +1,15 @@
 #![allow(dead_code)]
 #![allow(unused_parens, unused_must_use, unused_variables)]
 mod errorhandling;
-
-//single line comment ⚠️ ✅❌❗☠️ 🥰
-/* multi line comment */
 use rusqlite::{Connection, Result};
 use std::collections::BTreeMap;
 use std::collections::HashMap;
+use std::fmt::{Debug, Display};
+use std::str::FromStr;
+use strum_macros::EnumString;
+
+//single line comment ⚠️ ✅❌❗☠️ 🥰
+/* multi line comment */
 /// docs comment
 // u8 ---> 8bits
 // usize ---> 64bits
@@ -14,12 +17,11 @@ use std::collections::HashMap;
 // {:#?} pretty format for collections
 // '_' == All/NA
 // '_name' == silence warnings will use later
-use std::fmt::{Debug, Display};
-use std::str::FromStr;
 //use std::str::SplitWhitespace;
-use strum_macros::EnumString;
 
-fn main() {}
+fn main() {
+    cli_args_loop()
+}
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -1520,3 +1522,40 @@ fn vecdeque_basics() {
         my_vec_deque.pop_front();
     }
 }
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn cli_args_basics() {
+    // cargo run 'arg1' 'arg2'
+    let first = std::env::args().nth(1).expect("supply an arg");
+    let second = std::env::args().nth(2).expect("give 2 args");
+    // cargo run '42' 'pizza'
+    let n: i32 = first.parse().expect("arg should be an integer");
+    let slice: String = second.parse().expect("2nd arg should be a string");
+    println!("{} such a magical number", n); // 42 such a magical number
+    println!("{} such a magical word", slice); // pizza such a magical word
+}
+//★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
+fn cli_args_match() {
+    // cargo run 'arg: i32'
+    let first = std::env::args().nth(1).expect("please enter a number");
+    let n: i32 = first.parse().expect("must be a number");
+
+    let text = match n {
+        0 => "zero",
+        1 => "one",
+        2 => "two",
+        _ => "wtf",
+    };
+    println!("{}", text);
+}
+//★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
+fn cli_args_loop() {
+    //cargo run 'arg1' 'arg2' 'arg3' 'etc'
+    for arg in std::env::args() {
+        println!("{}", arg)
+    }
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓

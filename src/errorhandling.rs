@@ -143,4 +143,7 @@ pub fn err_main() {
         std::fs::File::open("doesnt_exist.txt")?.read_to_string(&mut val);
         Ok(val)
     }
+    //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+    //▓          Understanding '?'               ▓
+    //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 }
