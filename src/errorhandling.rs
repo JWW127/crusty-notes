@@ -143,7 +143,30 @@ pub fn err_main() {
         std::fs::File::open("doesnt_exist.txt")?.read_to_string(&mut val);
         Ok(val)
     }
+
     //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
     //▓          Understanding '?'               ▓
     //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+    fn understanding_question_mark() {
+        fn return_ok_int(x: u32) -> Result<u32, String> {
+            if x != 0 {
+                Ok(x)
+            } else {
+                Err("not a u32".to_string())
+            }
+        }
+
+        let res_42 = return_ok_int(42);
+        let res_match_check = match res_42 {
+            Ok(val) => val,
+            Err(_) => 0,
+        };
+        
+        // or we can just shortcut it with a '?' like this
+        fn res_question_mark(num: u32) -> Result<u32, String> {
+            let check = return_ok_int(num)?;
+            Ok(check)
+        }
+    }
 }
+
