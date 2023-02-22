@@ -1,3 +1,4 @@
+# cheat sheet training mostly from https://cheat.rs
 ## struct
 ```rust
 struct S{}                  // define a struct
@@ -53,4 +54,35 @@ a..         // range from a without an ending point
 s.x         // named field accessing. might deref x if not part of type s
 s.0         // numbered field accessing, used in tuple types
 ```
+## refs and pointers
 
+```rust
+&S                // shared reference(type: that provides space, holds any &s)
+&[S]              // special slice ref that contains (address, count)
+&str              // string slice that contains (address, byte_length)
+&mut S            // mutable ref slice S
+&dyn T            // special 'trait' object ref that contains (address, vtable)
+&s                // shared borrow (address, len, vtable, ... of 's')
+  &mut s          // exclusive borrow that allows mutability
+*const S          // immutable raw pointer type, has no mem safety
+  *mut S          // mutable raw pointer type, has no mem safety
+  &raw const s    // create raw pointer w/o going throu ref. c/ ptr:addr_of!() 
+  &raw mut s      // same^ but mutable raw pointers needed for unaligned fields
+//★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★    
+ref s             // bind by ref
+  let ref r = s   // same as 'let r = &s'
+  let S { ref mut x} = s  // mutable ref binding with shorthand destructuring
+//★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★
+*r                // deref a refrence to r, gives access to pointers target
+  *r = s;         // if 'r' is mutable ref, move or copy 's' to target memory
+  s = *r;         // 's' copies whatever 'r' refs, so long as 'r' is a copy
+  s = &my_box     // special cas for 'Box' that can move out non copy content
+'a                // 'Lifetime' parameter, life of flow in static analysis
+  &'a S           // only accepts address of some s, eg 'a or longer
+  &'a mut S       // same^ but allow address' content to be changed
+  struct S<'a>{}  // signals 'S' contains address with 'a. 'S' decides 'a
+  trait T<'a>{}   // signals 'S' impl T for S, might contain address
+  fn f<'a>(t: &'a T)    // this fn handles some address. Caller decides 'a
+'static                 // special lifetime lasting the entire program execution
+```
+## function and behavior
