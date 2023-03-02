@@ -1559,3 +1559,41 @@ fn cli_args_loop() {
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn string_2_iter_2_enumerate() {
+    // this example is from rust_in_action
+    let penguin_data = "\
+    common name,length (cm)
+    Little Penguin,33
+    Yellow-eyed penguin,65
+    Fiordland penguin,60
+    Invalid,data
+    ";
+
+    // creates iterator over the lines of a &str
+    let records = penguin_data.lines();
+
+    // enumerate over an interator, i as idx and record as val
+    for (i, record) in records.enumerate() {
+        //continue if first row || continue if row is only white space
+        if i == 0 || record.trim().len() == 0 {
+            continue;
+        }
+        // for each line(record) split on ',' trim whitespace, add to collection
+        let fields: Vec<_> = record
+            .split(',')
+            .map(|field| field.trim()) // take iter -> new iter
+            .collect();
+
+        // cfg checks config at compile time
+        if cfg!(debug_assertions) {
+            eprintln!("debug: {:?} -> {:?}", record, fields);
+        }
+
+        let name = fields[0];
+        // field[1] should be a Vec<&str> try to parse into f32
+        // if it works store it in variable 'length'
+        if let Ok(length) = fields[1].parse::<f32>() {
+            println!("{}, {}cm", name, length);
+        }
+    }
+}
