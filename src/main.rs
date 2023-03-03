@@ -5,7 +5,9 @@ use rusqlite::{Connection, Result};
 use std::collections::BTreeMap;
 use std::collections::HashMap;
 use std::fmt::{Debug, Display};
+use std::rc::Rc;
 use std::str::FromStr;
+use std::sync::{Arc, Mutex};
 use strum_macros::EnumString;
 
 //single line comment ⚠️ ✅❌❗☠️ 🥰
@@ -1596,4 +1598,21 @@ fn string_2_iter_2_enumerate() {
             println!("{}, {}cm", name, length);
         }
     }
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn var_box_rc_arc_mutex() {
+    //various ways to store an int
+
+    // puts integer on stack
+    let a = 10;
+    //puts integer on heap "boxed integer"
+    let b = Box::new(20);
+    // "box integer inside a ref counter"
+    let c = Rc::new(Box::new(30));
+    // Int wrapped in atomic ref counter protected by mutex lock
+    let d = Arc::new(Mutex::new(40));
+
+    println!("a:{:?} b:{:?} c:{:?} d:{:?}", a, b, c, d);
 }
