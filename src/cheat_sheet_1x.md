@@ -23,6 +23,15 @@ let mut x: T;               // 'let' but with mutability
 x = y;                      // 'Move' value of y to x, invalidating y if not a copy
 ```
 
+## ways to declare type on var
+```rust
+let a = 10;
+let b:i32 = 20;
+let c = 30i32;
+let d = 40_i32;
+let e = add(a,d);
+```
+
 bound varibles live on the stack for synchronous code, for async they become part of the
 async's state machine, possibly reside on the heap.
 
