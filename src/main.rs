@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 #![allow(unused_parens, unused_must_use, unused_variables)]
 mod errorhandling;
+mod mandelbrot_ria;
 use num::complex::Complex;
 use rusqlite::{Connection, Result};
 use std::collections::BTreeMap;
@@ -1627,6 +1628,17 @@ fn complex_math() {
     let result = a + b;
 
     println!("{} + {}i", result.re, result.im)
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn matching_styles(x: i32) {
+    match x {
+        1000000 => println!("direct"),
+        10..=40 => println!("range"),
+        42 | 69 => println!("this or that"),
+        _ => println!("wildcard"),
+    }
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
