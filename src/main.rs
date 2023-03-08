@@ -2,6 +2,7 @@
 #![allow(unused_parens, unused_must_use, unused_variables)]
 mod errorhandling;
 mod mandelbrot_ria;
+mod readfile_basics;
 use num::complex::Complex;
 use rusqlite::{Connection, Result};
 use std::collections::BTreeMap;
