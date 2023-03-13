@@ -21,9 +21,10 @@ pub fn readfile_basics() {
             break;
         }
 
-        // if len not empty print the
+        // if len not empty print the buffer
         println!("{} ({} bytes long)", line, len);
 
+        // clear the line so they dont persist
         line.truncate(0);
     }
 }

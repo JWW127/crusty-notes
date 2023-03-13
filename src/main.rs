@@ -1644,3 +1644,34 @@ fn matching_styles(x: i32) {
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn impl_with_dif_types() {
+    //declare our struct
+    struct MyNum<T> {
+        x: T,
+        y: T,
+    }
+
+    //declare if struct is i32
+    impl MyNum<i32> {
+        fn get_x(&self) -> &i32 {
+            &self.x
+        }
+    }
+
+    //declare if struct is &str
+    impl MyNum<&str> {
+        fn get_x(&self) -> String {
+            self.x.to_string()
+        }
+    }
+
+    // instantiate one of each
+    let num = MyNum { x: 4, y: 5 };
+    let str_num = MyNum {
+        x: "four",
+        y: "five",
+    };
+
+    // boom works as expected
+    println!("{} = {}", str_num.get_x(), num.get_x())
+}
