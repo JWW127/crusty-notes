@@ -4,6 +4,7 @@ mod errorhandling;
 mod mandelbrot_ria;
 mod readfile_basics;
 mod testing_basics;
+mod closure_strategies;
 use num::complex::Complex;
 use rusqlite::{Connection, Result};
 use std::collections::BTreeMap;
@@ -1676,3 +1677,6 @@ fn impl_with_dif_types() {
     // boom works as expected
     println!("{} = {}", str_num.get_x(), num.get_x())
 }
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
