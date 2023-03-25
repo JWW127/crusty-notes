@@ -1,10 +1,10 @@
 #![allow(dead_code)]
 #![allow(unused_parens, unused_must_use, unused_variables)]
+mod closure_strategies;
 mod errorhandling;
 mod mandelbrot_ria;
 mod readfile_basics;
 mod testing_basics;
-mod closure_strategies;
 use num::complex::Complex;
 use rusqlite::{Connection, Result};
 use std::collections::BTreeMap;
@@ -27,7 +27,7 @@ use strum_macros::EnumString;
 //use std::str::SplitWhitespace;
 
 fn main() {
-    cli_args_loop()
+    common_iterator_usage();
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -1680,3 +1680,41 @@ fn impl_with_dif_types() {
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn common_iterator_usage() {
+    let nums1 = vec![1, 2, 3, 4, 5];
+    let nums2 = vec![1, 2, 3, 4, 5];
+    let nums3 = vec![1, 2, 3, 4, 5];
+    let nums4 = vec![1, 2, 3, 4, 5];
+    let hw = vec!["hello", "world"];
+    let abc = vec!['a', 'b', 'c'];
+
+    // use map transform(adaptor)
+    let squares: Vec<i32> = nums1.iter().map(|x| x * x).collect();
+    println!("{:?}", squares);
+
+    // use filter(adaptor) to filter when condition satisfied
+    let odd_only: Vec<_> = nums2.iter().filter(|&x| x % 2 != 0).collect();
+    println!("{:?}", odd_only);
+
+    //fold(adaptor) into a single value
+    let sums: i32 = nums3
+        .iter()
+        .fold(0, |accumulator, &current| accumulator + current);
+    println!("{:?}", sums);
+
+    // sum(consumer) works like fold but just to sum
+    let total: i32 = nums4.iter().sum();
+    println!("{:?}", total);
+
+    // flat_map(adaptor ) flatten all elements of vec into single iterator
+    let flattened_into_chars: Vec<char> = hw.iter().flat_map(|sli| sli.chars()).collect();
+    println!("{:?}", flattened_into_chars);
+
+    //enumerate(adaptor) to add an index to each element
+    let idx_char: Vec<(usize, &char)> = abc.iter().enumerate().collect();
+    println!("{:?}", idx_char);
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
