@@ -12,7 +12,9 @@ use std::collections::HashMap;
 use std::fmt::{Debug, Display};
 use std::rc::Rc;
 use std::str::FromStr;
-use std::sync::{Arc, Mutex};
+use std::sync::{mpsc, Arc, Mutex};
+use std::thread;
+use std::time::Duration;
 use strum_macros::EnumString;
 
 //single line comment ⚠️ ✅❌❗☠️ 🥰
@@ -1717,4 +1719,31 @@ fn common_iterator_usage() {
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+fn concurrency_basics() {
+    let (tx, rx) = mpsc::channel();
 
+    // creates new thread
+    // move creates ownership
+    thread::spawn(move || {
+        let vals = vec![
+            String::from("joey"),
+            String::from("from"),
+            String::from("the"),
+            String::from("city"),
+            String::from("of"),
+            String::from("light"),
+        ];
+
+        for val in vals {
+            // send transfer
+            tx.send(val).unwrap();
+            // timeout se we can see it in human speed
+            thread::sleep(Duration::from_secs(1));
+        }
+    });
+
+    // received
+    for received in rx {
+        println!("Message from another thread {}", received)
+    }
+}
