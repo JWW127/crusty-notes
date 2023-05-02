@@ -1325,20 +1325,47 @@ fn hashmap_basics() {
     /*
     ✅Are stored on the heap
     ✅Are varibale in size
-    ⚠️ Keys and values of entries must be of same type
     ⚠️ Copy types or those with the copy trait like i32 are copied into hashmap
       while owned types like strings will be move ownership
     */
 
     // we'll need a struct for demo
+
+    //-------------------------------------------------------------------
+    //      Simple user from person
+    //-------------------------------------------------------------------
+    struct Person {
+        name: String,
+        id: u8,
+    }
+
+    struct User {
+        info: HashMap<u8, String>,
+    }
+
+    // create new person
+    let bob = Person {
+        name: String::from("Bob"),
+        id: 42,
+    };
+
+    // create new user
+    let mut user_bob = User {
+        info: HashMap::new(),
+    };
+
+    // insert info
+    user_bob.info.insert(bob.id, bob.name);
+    //--------------------------------------------------------------------
+    //--------------------------------------------------------------------
+
     #[derive(Debug)]
     struct City {
         name: String,
         population: HashMap<u32, u32>,
         retired: HashMap<u32, u32>,
-        employed: HashMap<u32, u32>,
+        employed: HashMap<u8, u32>,
     }
-
     // instantiate
     let mut gotham = City {
         name: "Gotham".to_string(),
@@ -1363,7 +1390,7 @@ fn hashmap_basics() {
         let civ = v - retired;
         // entry = check if *k exist and has value, if it does do nothing
         // else create the *k and enter civ as value
-        gotham.employed.entry(*k).or_insert(civ); //each <k,v> = <u32,u32>
+        gotham.employed.entry(*k as u8).or_insert(civ); //each <k,v> = <u32,u32>
     }
 
     gotham.name = "Arkham".to_string();
