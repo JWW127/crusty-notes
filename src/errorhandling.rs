@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 #![allow(unused_parens, unused_must_use, unused_variables)]
-
+use colored::*;
 use std::fs;
 use std::io::{self, Read};
 
@@ -161,12 +161,54 @@ pub fn err_main() {
             Ok(val) => val,
             Err(_) => 0,
         };
-        
+
         // or we can just shortcut it with a '?' like this
         fn res_question_mark(num: u32) -> Result<u32, String> {
             let check = return_ok_int(num)?;
             Ok(check)
         }
     }
-}
 
+    #[derive(Debug)]
+    enum MyError {
+        Bad(()),
+    }
+    //-------------------------------------------------------------------------
+    //🍟🍟ERROR HANDLING WITH Results and CUSTOM ERRORS 🍟🍟
+    fn get32(n: i32) -> Result<i32, MyError> {
+        match n != 0 {
+            true => Ok(n),
+            false => Err(MyError::Bad(println!("{}", "bad".bright_red()))),
+        }
+    }
+
+    fn is_res(i: i32) -> Result<i32, MyError> {
+        let res = get32(i);
+        res
+    }
+
+    fn custom_errors_results() {
+        let cool = is_res(0);
+        println!("{:?}", cool.unwrap())
+    }
+    //-------------------------------------------------------------------------
+    //🍟🍟ERROR HANDLING WITH OPTIONS and CUSTOM ERRORS 🍟🍟
+    fn get_num(n: i32) -> Option<i32> {
+        if n != 0 {
+            Some(n)
+        } else {
+            None
+        }
+    }
+
+    fn my_res(i: i32) -> Result<i32, MyError> {
+        let res = get_num(i).ok_or(MyError::Bad(println!("something {} happened", "bad".red())));
+        res
+    }
+
+    fn custom_errors_opt() {
+        let cool = is_res(0);
+        println!("{:?}", cool.unwrap())
+    }
+    //-------------------------------------------------------------------------
+}
