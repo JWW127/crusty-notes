@@ -59,7 +59,7 @@ dependencies = [
  "failure",
  "flate2",
  "futures",
- "h2 0.3.17",
+ "h2 0.1.26",
  "hashbrown 0.6.3",
  "http 0.1.21",
  "httparse",
@@ -788,7 +788,7 @@ checksum = "ad0a93d233ebf96623465aad4046a8d3aa4da22d4f4beba5388838c8a434bbb4"
 
 [[package]]
 name = "h2"
-version = "0.3.17"
+version = "0.1.26"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a5b34c246847f938a410a03c5458c7fee2274436675e76d8b903c08efc29c462"
 dependencies = [
