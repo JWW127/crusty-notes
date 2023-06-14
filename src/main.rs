@@ -31,7 +31,7 @@ use strum_macros::EnumString;
 //use std::str::SplitWhitespace;
 
 fn main() {
-    or_else_with_options()
+map_err_with_results()
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -1852,4 +1852,29 @@ fn or_else_with_options() {
     let value_2 = result_2.or_else(|| Some(69));
 
     println!("Value: {:?}", value_2); // Output: Value: Some(69)
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+fn map_err_with_results() {
+    fn divide(a: i32, b: i32) -> Result<i32, String> {
+        if b == 0 {
+            Err("Division by zero".to_string())
+        } else {
+            Ok(a / b)
+        }
+    }
+
+    // `.map_err` allows us to keep our current success case but modify or Err cases
+    let result = divide(10, 0).map_err(|err| format!("New Err: WTF, also our old Err:{}", err));
+    match result {
+        Ok(value) => println!("Result: {}", value),
+        Err(error) => println!("Error: {}", error),
+    }
+
+    // Our would typically be
+    // -> "Division by zero"
+    // With map_err we kept our success case but our Err case will be
+    // -> "New Err: WTF, also our old Err: Division by zero"
 }
