@@ -31,7 +31,7 @@ use strum_macros::EnumString;
 //use std::str::SplitWhitespace;
 
 fn main() {
-    common_iterator_usage();
+    or_else_with_options()
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -1817,3 +1817,39 @@ fn two() -> Result<i32, Box<dyn Error>> {
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+fn or_else_with_results() {
+    // this is just a Err
+    let result: Result<i32, &str> = Err("Error");
+    // we can use or to provide a default in the instance of Err
+    let value: Result<i32, &str> = result.or(Ok(42));
+
+    println!("Value: {:?}", value); // Output: Value: Ok(42)
+
+    // another Err
+    let result_2: Result<i32, &str> = Err("Error");
+    // the same as `.or()` but with `.or_else()` has a closure
+    let value_2: Result<i32, &str> = result_2.or_else(|_| Ok(69));
+
+    println!("Value: {:?}", value_2); // Output: Value: Ok(69)
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+fn or_else_with_options() {
+    // this is just a None
+    let result: Option<u32> = None;
+    // we can use or to provide a default in the instance of None
+    let value = result.or(Some(42));
+
+    println!("Value: {:?}", value); // Output: Value: Some(42)
+
+    // another Err
+    let result_2: Option<u32> = None;
+    // the same as `.or()` but with `.or_else()` has a closure
+    // notice using this with opt vs result there is no closure arg
+    let value_2 = result_2.or_else(|| Some(69));
+
+    println!("Value: {:?}", value_2); // Output: Value: Some(69)
+}
