@@ -31,7 +31,7 @@ use strum_macros::EnumString;
 //use std::str::SplitWhitespace;
 
 fn main() {
-map_err_with_results()
+    unwrap_err_success_case();
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
@@ -1877,4 +1877,33 @@ fn map_err_with_results() {
     // -> "Division by zero"
     // With map_err we kept our success case but our Err case will be
     // -> "New Err: WTF, also our old Err: Division by zero"
+}
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+fn unwrap_err_success_case() {
+    fn divide(a: i32, b: i32) -> Result<i32, &'static str> {
+        if b == 0 {
+            Err("Cannot divide by zero.")
+        } else {
+            Ok(a / b)
+        }
+    }
+
+    let result = divide(10, 1);
+    match result {
+        Ok(value) => {
+            println!("Result: {}", value);
+        }
+        Err(error) => {
+            println!("Error: {}", error);
+        }
+    }
+    // this should work but unwrap_err() panics if its Ok(T)
+    // we can kinda think of this like a `should panic` test
+
+    //unwrap_err panics on a Success case
+    let unwrapped = result.unwrap_err();
+    println!("Unwrapped error: {}", unwrapped);
 }

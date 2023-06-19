@@ -211,4 +211,33 @@ pub fn err_main() {
         println!("{:?}", cool.unwrap())
     }
     //-------------------------------------------------------------------------
+    // How we might handle status codes errors
+    use reqwest::header::HeaderMap;
+    use reqwest::StatusCode;
+    use std::error::Error;
+
+    pub async fn get_data(api_key: &str) -> Result<String, Box<dyn Error>> {
+        let url = "https://some.api.com/v1/user/post";
+        let secret = format!("Bearer {}", api_key);
+
+        // creates request headers
+        let mut headers = HeaderMap::new();
+        headers.insert("Authorization", secret.as_str().parse()?);
+        headers.insert("Accept", "application/json".parse()?);
+
+        // client builder, we can use this make the actual request once we have headers
+        let client = reqwest::Client::new();
+        let response = client.get(url).headers(headers).send().await?;
+
+        // https responses have status codes
+        let status = &response.status();
+
+        // we check if status code is 200 OK
+        if status != &StatusCode::OK {
+            // if not we can return our dyn Error like so
+            Err(format!("{}", status))?;
+        };
+
+        Ok(response.json().await?)
+    }
 }
