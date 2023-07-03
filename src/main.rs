@@ -1,12 +1,13 @@
 #![allow(dead_code)]
-#![allow(unused_parens, unused_must_use, unused_variables)]
-use colored::*;
-use std::error::Error;
+#![allow(unused_parens, unused_must_use, unused_variables, unused_imports)]
 mod closure_strategies;
 mod errorhandling;
 mod mandelbrot_ria;
 mod readfile_basics;
 mod testing_basics;
+mod patterns;
+use colored::*;
+use std::error::Error;
 use num::complex::Complex;
 use rusqlite::{Connection, Result};
 use std::collections::BTreeMap;
@@ -18,6 +19,7 @@ use std::sync::{mpsc, Arc, Mutex};
 use std::thread;
 use std::time::Duration;
 use strum_macros::EnumString;
+use patterns::builder;
 
 //single line comment ⚠️ ✅❌❗☠️ 🥰
 /* multi line comment */
