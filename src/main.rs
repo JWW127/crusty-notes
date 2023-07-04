@@ -2,11 +2,13 @@
 #![allow(unused_parens, unused_must_use, unused_variables, unused_imports)]
 mod closure_strategies;
 mod errorhandling;
+mod interior_mutability;
 mod mandelbrot_ria;
 mod readfile_basics;
 mod testing_basics;
 mod patterns;
 use colored::*;
+use interior_mutability::test_interior_mut;
 use std::error::Error;
 use num::complex::Complex;
 use rusqlite::{Connection, Result};
@@ -33,7 +35,7 @@ use patterns::builder;
 //use std::str::SplitWhitespace;
 
 fn main() {
-    unwrap_err_success_case();
+    //
 }
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
